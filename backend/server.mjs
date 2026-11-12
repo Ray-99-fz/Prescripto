@@ -13,11 +13,25 @@ const PORT = process.env.PORT || 4000
 connectDB()
 await connectCloudinary()
 
+const frontendOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5177",
+    process.env.FRONTEND_URL,
+    process.env.ADMIN_URL
+].filter(Boolean)
+
+app.use(
+    cors({
+        origin: frontendOrigins,
+        methods: ['POST', 'GET'],
+        credentials: true
+    })
+)
+
 // app middlewares
 app.use(express.json())
-app.use(
-    cors()
-)
+
 
 // Api Endpoints
 
